@@ -8,6 +8,7 @@ Sequel.migration do
       String :notes, null: true
       foreign_key :rating_id, :ratings, type: :uuid, null: false
       foreign_key :user_id, :users, type: :uuid, null: false
+      unique %i[date user_id]
     end
   end
 end
