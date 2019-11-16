@@ -1,11 +1,11 @@
 Layout/ExtraSpacing:
   AllowForAlignment: true
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedColonStyle: table
   EnforcedHashRocketStyle: table
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 AllCops:

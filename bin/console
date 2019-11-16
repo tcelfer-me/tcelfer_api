@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'sequel'
+require 'logger'
+
+require_relative '../lib/tcelfer_api/utils'
+
+TcelferApi::Utils.app_root = File.expand_path('../', __dir__)
+
+ENV['RACK_ENV'] = 'development'
+
+DB = Sequel.postgres(TcelferApi.config[:db_conf])
+DB.loggers << Logger.new($stderr)
+
+# Load the Sequel::Models in
+require_relative '../models/rating'
+require_relative '../models/user'
+require_relative '../models/auth_token'
+require_relative '../models/day'
+
+# (If you use this, don't forget to add pry to your Gemfile!)
+require 'pry'
+Pry.start TcelferApi

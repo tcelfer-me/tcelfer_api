@@ -1,0 +1,8 @@
+tokens:
+  valid_for: 3600
+db_conf:
+  host: localhost
+  port: 5432
+  user: tcelfer_dev
+  database: tcelfer_dev
+  # password: hunter2

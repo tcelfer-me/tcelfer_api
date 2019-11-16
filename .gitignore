@@ -3,5 +3,6 @@
 /spec/reports/
 /tmp/
 
-# Used by dotenv library to load environment variables.
-.env
+# Only include sample configs
+/config/**
+!/config/**/*sample*
