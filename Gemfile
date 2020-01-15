@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'bcrypt',           '~> 3.1'
-gem 'pg',               '~> 1.1'
+gem 'pg',               '~> 1.2'
 gem 'rack',             '~> 2.0'
 gem 'rack-contrib',     '~> 2.1'
 gem 'rspec',            '~> 3.9'
