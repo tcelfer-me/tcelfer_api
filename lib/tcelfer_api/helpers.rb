@@ -96,8 +96,8 @@ module TcelferApi
       method("authenticate_#{auth_type}").call(*creds)
     end
 
-    def authenticate_user_pass(email, password)
-      @auth_user = User.find(email: email)
+    def authenticate_user_pass(username, password)
+      @auth_user = User.find(username: username)
       return false unless @auth_user
 
       @get_refresh = true

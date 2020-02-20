@@ -22,12 +22,14 @@ module TcelferApi
     end
 
     post '/new', provides: :json do
-      halt 409 if User.find(email: @payload[:email])
+      halt 409 if User.find(username: @payload[:username])
 
-      auth_user = User.new(email: @payload[:email], password: @payload[:password])
+      auth_user = User.new(username: @payload[:username], password: @payload[:password])
       auth_user.save
       status 201
-      { email: auth_user.email, created_on: auth_user.account_created }.to_json
+      { id: auth_user.id, username: auth_user.username, created_on: auth_user.account_created }.to_json
+    rescue TcelferApi::UserError => err
+      halt 400, {}, { error: err.message}.to_json
     end
 
     set :authentication do |auth_type|

@@ -4,7 +4,8 @@ Sequel.migration do
   change do
     create_table :users do
       uuid :id, default: Sequel.function(:uuid_generate_v4), primary_key: true
-      String :email, null: false, unique: true
+      String :username, null: false, unique: true
+      String :email, null: true, unique: true
       String :password_v1, null: false
       DateTime :pass_last_changed, default: Sequel::CURRENT_TIMESTAMP
       DateTime :account_created, default: Sequel::CURRENT_TIMESTAMP

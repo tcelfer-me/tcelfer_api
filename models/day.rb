@@ -11,7 +11,7 @@ module TcelferApi
     # [.user][]2019-01-17]: Normal, Average Day
     # @return [String]
     def to_s
-      str = "[#{User[user_id].email}][#{date}] #{Rating[rating_id].text}"
+      str = "[#{User[user_id].username}][#{date}] #{Rating[rating_id].text}"
       str += " || Notes: #{notes}" unless notes.nil?
       str
     end
