@@ -9,6 +9,8 @@ require 'sequel/plugins/json_serializer'
 module TcelferApi
   # Model for the `api_auth` table
   class AuthToken < Sequel::Model(:auth_tokens)
+    plugin :json_serializer
+
     # These keys are what are returned to the user
     EXPORT_KEYS = %i[id expires_at comment created_on].freeze
 
@@ -40,8 +42,6 @@ module TcelferApi
         ret_token.merge(tok.to_hash.slice(*EXPORT_KEYS))
       end
     end
-
-    plugin :json_serializer
 
     def before_save
       valid_for_key = :"#{'refresh_' if token_type == 'refresh'}valid_for"

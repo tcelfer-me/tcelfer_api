@@ -8,7 +8,7 @@ Sequel.migration do
       String :email, null: true, unique: true
       String :password_v1, null: false
       DateTime :pass_last_changed, default: Sequel::CURRENT_TIMESTAMP
-      DateTime :account_created, default: Sequel::CURRENT_TIMESTAMP
+      DateTime :created_on, default: Sequel::CURRENT_TIMESTAMP
       DateTime :last_edited, default: Sequel::CURRENT_TIMESTAMP
       DateTime :last_login, null: true
     end

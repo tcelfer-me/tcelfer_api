@@ -13,6 +13,10 @@ module TcelferApi
   class User < Sequel::Model(:users)
     plugin :json_serializer
 
+    # These keys are what are returned to the user
+    EXPORT_KEYS = %i[id username email created_on].freeze
+    PASSWD_LENGTH_RANGE = (12..55).freeze
+
     # @param [String] clear_text
     def password=(clear_text)
       validate_password(clear_text)
@@ -28,9 +32,9 @@ module TcelferApi
     private
 
     def validate_password(password)
-      return if (12..55).include?(password.length)
+      return if PASSWD_LENGTH_RANGE.include?(password.length)
 
-      raise UserError, 'Password needs to be 20 to 55 characters'
+      raise UserError, "Password needs to be #{PASSWD_LENGTH_RANGE.to_s.sub('..', ' to ')} characters"
     end
   end
 end
