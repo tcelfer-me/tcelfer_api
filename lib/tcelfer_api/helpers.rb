@@ -79,7 +79,7 @@ module TcelferApi
       fetched_token = AuthToken.first(id: tok_id)
       return false unless fetched_token
 
-      unless fetched_token.expires_at > Time.now
+      unless fetched_token.expires_at > DateTime.now
         @errors = { err: 'expired token' }
         return false
       end
@@ -110,7 +110,7 @@ module TcelferApi
       refresh_tok = AuthToken.find(id: token_id)
       return false unless refresh_tok
 
-      unless refresh_tok.expires_at > Time.now
+      unless refresh_tok.expires_at > DateTime.now
         @errors = { err: 'expired token' }
         return false
       end

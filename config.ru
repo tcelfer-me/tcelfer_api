@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'date'
 require 'logger'
 require 'rack'
 require 'rack/contrib'
@@ -13,6 +14,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'tcelfer_api/utils'
 # This is easier than the utils class counting up the lib/ tree.
 TcelferApi::Utils.app_root = File.expand_path(__dir__)
+
+# Timezones are hard, mannnn ~agargiulo
+Sequel.datetime_class = DateTime
+Sequel.application_timezone = :local
 
 # Connect to the database plz
 DB = Sequel.postgres(TcelferApi.config[:db_conf])

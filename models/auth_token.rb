@@ -15,7 +15,7 @@ module TcelferApi
     class << self
       # Use this in a `rake cron` task perhaps?
       def clean_expired!
-        AuthToken.where(Sequel[:expires_at] < Time.now).delete
+        AuthToken.where(Sequel[:expires_at] < DateTime.now).delete
       end
 
       def new_tokens(user_id, comment, get_refresh)
@@ -46,7 +46,7 @@ module TcelferApi
     def before_save
       valid_for_key = :"#{'refresh_' if token_type == 'refresh'}valid_for"
       valid_for = TcelferApi.config[:tokens][valid_for_key]
-      self.expires_at = Time.now + valid_for
+      self.expires_at = DateTime.now + valid_for
       super
     end
 
