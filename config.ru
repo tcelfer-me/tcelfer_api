@@ -3,6 +3,7 @@
 require 'logger'
 require 'rack'
 require 'rack/contrib'
+require 'rack/cors'
 require 'sequel'
 require 'yaml'
 
@@ -30,6 +31,14 @@ require_relative 'models/day'
 # Pre-seed `ratings` table if the defaults are missing
 TcelferApi::Utils.seed_ratings_table!
 
+use Rack::Cors, :debug => true, :logger => Logger.new(STDOUT) do
+  allow do
+    origins 'http://localhost:8080'
+    resource '/api/v1/*',
+             headers: :any,
+             methods: :any
+  end
+end
 # Load in the controllers
 require_relative 'controllers/tcelfer_api'
 require_relative 'controllers/user_management'
