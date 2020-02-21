@@ -1,8 +1,8 @@
-# TcelferApi <sub>[t]cel-fer</sub> #
+# TcelferApi <sub> _[t]cel-fer_ </sub> #
 ### Track your mood from day to day, API edition ###
 -- --
 
-#### Database config ####
+## Database config ##
  1. `mv config/tc_api.{sample-,}dev.yml`
  2. create a postgresql db, user.
     - Also enable the following Pgsql extensions.
@@ -15,6 +15,10 @@
         ```
  3. set creds in `config/tc_api.ENV.yml`
 
-#### Usage ####
+## Usage ##
 - `bundle install`
+### Basic Setup ###
 - `bundle exec rackup`
+### TLS Setup ###
+- Acquire certificate files (LetsEncrypt maybe?)
+- `TCAPI_SSL_KEY=path/to/privkey.pem TCAPI_SSL_CERT=path/to/fullchain.pem bundle exec puma`
