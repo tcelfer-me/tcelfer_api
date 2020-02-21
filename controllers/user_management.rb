@@ -3,8 +3,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 
-require 'tcelfer_api/helpers'
-
 module TcelferApi
   # Various user management routes
   class UserManagement < Sinatra::Base
@@ -41,11 +39,19 @@ module TcelferApi
     end
 
     post '/auth', provides: :json, authentication: :user_pass do
-      AuthToken.new_tokens(@auth_user.id, nil, @payload.fetch(:refresh, false)).to_json
+      AuthToken.new_tokens(
+        @auth_user.id,
+        @payload.fetch(:comment, nil),
+        @payload.fetch(:refresh, false)
+      ).to_json
     end
 
     post '/refresh', provides: :json, authentication: :refresh do
       AuthToken.new_tokens(@auth_user.id, nil, false).to_json
+    end
+
+    after do
+      headers['X-Tcelfer-Api-Version'] = TcelferApi::VERSION
     end
   end
 end

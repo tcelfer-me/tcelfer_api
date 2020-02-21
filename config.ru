@@ -11,7 +11,10 @@ require 'yaml'
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'tcelfer_api/helpers'
 require 'tcelfer_api/utils'
+require 'tcelfer_api/version'
+
 # This is easier than the utils class counting up the lib/ tree.
 TcelferApi::Utils.app_root = File.expand_path(__dir__)
 
@@ -36,7 +39,7 @@ require_relative 'models/day'
 # Pre-seed `ratings` table if the defaults are missing
 TcelferApi::Utils.seed_ratings_table!
 
-use Rack::Cors, debug: true, logger: Logger.new(STDOUT) do
+use Rack::Cors, debug: false, logger: Logger.new(STDOUT) do
   allow do
     origins 'http://localhost:8080'
     resource '/api/v1/*',

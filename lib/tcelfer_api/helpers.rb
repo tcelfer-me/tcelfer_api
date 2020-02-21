@@ -18,7 +18,7 @@ module TcelferApi
         params.dup
       end
     rescue JSON::ParserError
-      nil
+      {}
     end
 
     # Returns a Range of dates
