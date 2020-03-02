@@ -10,7 +10,7 @@ gem 'puma',             '~> 4.3'
 gem 'rack',             '~> 2.2'
 gem 'rack-contrib',     '~> 2.1'
 gem 'rspec',            '~> 3.9'
-gem 'sequel',           '~> 5.29'
+gem 'sequel',           '~> 5.30'
 gem 'sinatra',          '~> 2.0'
 gem 'sinatra-contrib',  '~> 2.0'
 
