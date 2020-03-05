@@ -41,7 +41,7 @@ TcelferApi::Utils.seed_ratings_table!
 
 use Rack::Cors, debug: false, logger: Logger.new(STDOUT) do
   allow do
-    origins 'http://localhost:8080'
+    origins(TcelferApi.config[:cors][:remote_host].to_s + ':' + TcelferApi.config[:cors][:remote_port].to_s)
     resource '/api/v1/*',
              headers: :any,
              methods: :any
