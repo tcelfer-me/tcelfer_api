@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'sequel'
+require 'date'
 require 'logger'
+require 'sequel'
 
 require_relative '../lib/tcelfer_api/utils'
 
 TcelferApi::Utils.app_root = File.expand_path('../', __dir__)
 
 ENV['RACK_ENV'] = 'development'
+
+Sequel.datetime_class = DateTime
+Sequel.application_timezone = :local
 
 DB = Sequel.postgres(TcelferApi.config[:db_conf])
 DB.loggers << Logger.new($stderr)

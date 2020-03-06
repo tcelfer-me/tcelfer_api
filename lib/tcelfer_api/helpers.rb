@@ -18,7 +18,7 @@ module TcelferApi
         params.dup
       end
     rescue JSON::ParserError
-      nil
+      {}
     end
 
     # Returns a Range of dates
@@ -79,7 +79,7 @@ module TcelferApi
       fetched_token = AuthToken.first(id: tok_id)
       return false unless fetched_token
 
-      unless fetched_token.expires_at > Time.now
+      unless fetched_token.expires_at > DateTime.now
         @errors = { err: 'expired token' }
         return false
       end
@@ -96,8 +96,8 @@ module TcelferApi
       method("authenticate_#{auth_type}").call(*creds)
     end
 
-    def authenticate_user_pass(email, password)
-      @auth_user = User.find(email: email)
+    def authenticate_user_pass(username, password)
+      @auth_user = User.find(username: username)
       return false unless @auth_user
 
       @get_refresh = true
@@ -110,7 +110,7 @@ module TcelferApi
       refresh_tok = AuthToken.find(id: token_id)
       return false unless refresh_tok
 
-      unless refresh_tok.expires_at > Time.now
+      unless refresh_tok.expires_at > DateTime.now
         @errors = { err: 'expired token' }
         return false
       end

@@ -3,8 +3,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 
-require 'tcelfer_api/helpers'
-
 module TcelferApi
   # Various user management routes
   class UserManagement < Sinatra::Base
@@ -22,12 +20,15 @@ module TcelferApi
     end
 
     post '/new', provides: :json do
-      halt 409 if User.find(email: @payload[:email])
+      halt 409 if User.where(username: @payload[:username]).or(email: @payload.fetch(:email, '')).any?
 
-      auth_user = User.new(email: @payload[:email], password: @payload[:password])
+      auth_user = User.new(username: @payload[:username], password: @payload[:password])
+      auth_user.email = @payload[:email] if @payload.key? :email
       auth_user.save
       status 201
-      { email: auth_user.email, created_on: auth_user.account_created }.to_json
+      auth_user.to_hash.slice(*User::EXPORT_KEYS).to_json
+    rescue TcelferApi::UserError => e
+      halt 400, {}, { error: e.message }.to_json
     end
 
     set :authentication do |auth_type|
@@ -38,11 +39,19 @@ module TcelferApi
     end
 
     post '/auth', provides: :json, authentication: :user_pass do
-      AuthToken.new_tokens(@auth_user.id, nil, @payload.fetch(:refresh, false)).to_json
+      AuthToken.new_tokens(
+        @auth_user.id,
+        @payload.fetch(:comment, nil),
+        @payload.fetch(:refresh, false)
+      ).to_json
     end
 
     post '/refresh', provides: :json, authentication: :refresh do
       AuthToken.new_tokens(@auth_user.id, nil, false).to_json
+    end
+
+    after do
+      headers['X-Tcelfer-Api-Version'] = TcelferApi::VERSION
     end
   end
 end
