@@ -7,5 +7,6 @@ db_conf:
   database: tcelfer_dev
   # password: hunter2
 cors:
-  remote_host: localhost
-  remote_port: 8080
+  debug: true
+  remote_hosts:
+    - http://localhost:8080

@@ -39,9 +39,9 @@ require_relative 'models/day'
 # Pre-seed `ratings` table if the defaults are missing
 TcelferApi::Utils.seed_ratings_table!
 
-use Rack::Cors, debug: false, logger: Logger.new(STDOUT) do
+use Rack::Cors, debug: (!!TcelferApi.config[:cors][:debug]), logger: Logger.new(STDOUT) do
   allow do
-    origins(TcelferApi.config[:cors][:remote_host].to_s + ':' + TcelferApi.config[:cors][:remote_port].to_s)
+    origins(TcelferApi.config[:cors][:remote_hosts])
     resource '/api/v1/*',
              headers: :any,
              methods: :any
