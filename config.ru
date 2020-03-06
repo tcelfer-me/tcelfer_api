@@ -1,17 +1,26 @@
 # frozen_string_literal: true
 
+require 'date'
 require 'logger'
 require 'rack'
 require 'rack/contrib'
+require 'rack/cors'
 require 'sequel'
 require 'yaml'
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'tcelfer_api/helpers'
 require 'tcelfer_api/utils'
+require 'tcelfer_api/version'
+
 # This is easier than the utils class counting up the lib/ tree.
 TcelferApi::Utils.app_root = File.expand_path(__dir__)
+
+# Timezones are hard, mannnn ~agargiulo
+Sequel.datetime_class = DateTime
+Sequel.application_timezone = :local
 
 # Connect to the database plz
 DB = Sequel.postgres(TcelferApi.config[:db_conf])
@@ -30,6 +39,14 @@ require_relative 'models/day'
 # Pre-seed `ratings` table if the defaults are missing
 TcelferApi::Utils.seed_ratings_table!
 
+use Rack::Cors, debug: (!!TcelferApi.config[:cors][:debug]), logger: Logger.new(STDOUT) do
+  allow do
+    origins(TcelferApi.config[:cors][:remote_hosts])
+    resource '/api/v1/*',
+             headers: :any,
+             methods: :any
+  end
+end
 # Load in the controllers
 require_relative 'controllers/tcelfer_api'
 require_relative 'controllers/user_management'

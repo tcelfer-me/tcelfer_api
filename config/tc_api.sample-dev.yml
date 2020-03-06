@@ -6,3 +6,7 @@ db_conf:
   user: tcelfer_dev
   database: tcelfer_dev
   # password: hunter2
+cors:
+  debug: true
+  remote_hosts:
+    - http://localhost:8080

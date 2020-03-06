@@ -3,9 +3,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 
-require 'tcelfer_api/utils'
-require 'tcelfer_api/helpers'
-
 module TcelferApi
   # Beep bop
   class TcelferApiApp < Sinatra::Base
@@ -58,6 +55,10 @@ module TcelferApi
       day.rating_id = validate_rating(payload[:rating]) if payload.key?('rating')
       day.notes     = payload['notes'] if payload.key?('notes')
       day.save.to_json
+    end
+
+    after do
+      headers['X-Tcelfer-Api-Version'] = TcelferApi::VERSION
     end
 
     not_found do
