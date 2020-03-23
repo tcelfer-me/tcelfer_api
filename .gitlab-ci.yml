@@ -13,9 +13,11 @@ cache:
 
 before_script:
   - ruby -v  # Print out ruby version for debugging
-  - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
+  - apk add --update build-base postgresql-dev
+  - gem install bundler -v '>= 2.1.4'
+  - bundle config set path /tmp/vendor # Install dependencies into ./vendor/ruby
+  - bundle install -j $(nproc)
 
-# Optional - Delete if not using `rubocop`
 rubocop:
   stage: test
   script:
