@@ -16,7 +16,7 @@ before_script:
   - apk add --update build-base postgresql-dev
   - gem install bundler -v '>= 2.1.4'
   - bundle config set path vendor # Install dependencies into ./vendor/ruby
-  - bundle install -j $(nproc)
+  - bundle install -j 2
 
 rubocop:
   stage: test
