@@ -1,0 +1,22 @@
+# Official language image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/ruby/tags/
+image: ruby:2.7.0-alpine3.11
+
+stages:
+  - test
+
+# Cache gems in between builds
+cache:
+  paths:
+    - vendor/ruby
+
+
+before_script:
+  - ruby -v  # Print out ruby version for debugging
+  - bundle install -j $(nproc) --path vendor  # Install dependencies into ./vendor/ruby
+
+# Optional - Delete if not using `rubocop`
+rubocop:
+  stage: test
+  script:
+    - rubocop
