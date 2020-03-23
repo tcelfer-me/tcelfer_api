@@ -21,4 +21,4 @@ before_script:
 rubocop:
   stage: test
   script:
-    - rubocop
+    - bundle exec rubocop
