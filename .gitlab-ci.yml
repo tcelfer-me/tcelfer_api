@@ -1,6 +1,12 @@
 # Official language image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/ruby/tags/
-image: ruby:2.7.0-alpine3.11
+default:
+  image: ruby:2.7.0-alpine3.11
+
+variables:
+  POSTGRES_DB:               tcelfer_dev
+  POSTGRES_USER:             tcelfer_dev
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
   - test
@@ -10,15 +16,21 @@ cache:
   paths:
     - vendor/ruby
 
-
-before_script:
-  - ruby -v  # Print out ruby version for debugging
-  - apk add --update build-base postgresql-dev
-  - gem install bundler -v '>= 2.1.4'
-  - bundle config set path vendor # Install dependencies into ./vendor/ruby
-  - bundle install -j 2
-
 rubocop:
   stage: test
+  before_script:
+    - sh .ci/before-script.sh
   script:
     - bundle exec rubocop
+
+api_console:
+  services:
+    - postgres:12.2-alpine
+  stage: test
+  before_script:
+    - sh .ci/before-script.sh
+    - sh .ci/init-tcelfer-db.sh
+    - bundle exec puma&
+  script:
+    - zsh .ci/test_user_gen.zsh
+    - kill $(jobs -p)
