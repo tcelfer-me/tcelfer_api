@@ -1,0 +1,15 @@
+---
+- text: Amazing, Fantastic Day
+  color: 11546720 # Maroon
+- text: Really Good, Happy Day
+  color: 8236956 # Some nice green color
+- text: Normal, Average Day
+  color: 13468991 # Peru
+- text: Exhausted, Tired Day
+  color: 4915330 # Indigo
+- text: Stressed-Out, Frantic Day
+  color: 13386290 # Some nice red color
+- text: Frustrated, Angry Day
+  color: 16753920 # Orange
+- text: Depressed, Sad Day
+  color: 7117243 # Some nice blue color

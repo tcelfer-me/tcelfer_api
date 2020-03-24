@@ -6,4 +6,5 @@
 # Only include sample configs
 /config/**
 !/config/puma.rb
+!/config/default*.yml
 !/config/**/*sample*
