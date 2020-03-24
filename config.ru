@@ -24,7 +24,7 @@ Sequel.application_timezone = :local
 
 # Connect to the database plz
 DB = Sequel.postgres(TcelferApi.config[:db_conf])
-DB.loggers << Logger.new($stderr) if ENV['RACK_ENV'] == 'development'
+DB.loggers << Logger.new($stderr) if ENV['TC_CONSOLE_DEBUG']
 
 # Run migrations always on start.
 Sequel.extension :migration

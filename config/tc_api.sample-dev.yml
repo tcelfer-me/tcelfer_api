@@ -1,8 +1,8 @@
 tokens:
-  valid_for: 3600
+  valid_for: 3600 # 1 hour
+  refresh_valid_for: 86_400 # 1 day
 db_conf:
-  host: localhost
-  port: 5432
+  host: postgres
   user: tcelfer_dev
   database: tcelfer_dev
   # password: hunter2
