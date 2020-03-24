@@ -28,9 +28,11 @@ api_console:
     - postgres:12.2-alpine
   stage: test
   before_script:
+    # This is all very messy for now. Sorry
     - sh .ci/before-script.sh
     - sh .ci/init-tcelfer-db.sh
     - bundle exec puma&
+    - sleep 10
   script:
     - zsh .ci/test_user_gen.zsh
     - kill $(jobs -p)
