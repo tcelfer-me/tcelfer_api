@@ -9,3 +9,5 @@ gem install bundler -v '~> 2.1.4'
 bundle config set path vendor
 
 bundle install -j $(nproc)
+
+cp config/tc_api.sample-dev.yml config/tc_api.dev.yml
