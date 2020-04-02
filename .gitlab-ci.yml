@@ -10,12 +10,6 @@ variables:
   POSTGRES_USER:             tcelfer_dev
   POSTGRES_HOST_AUTH_METHOD: trust
 
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: never
-    - when: always
-
 stages:
   - cron
   - test
@@ -34,6 +28,7 @@ cron-outdated:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always
+    - when: never
 
 rubocop:
   stage: test
@@ -41,6 +36,11 @@ rubocop:
     - sh .ci/before-script.sh
   script:
     - bundle exec rubocop
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
+
 
 api_console:
   services:
@@ -55,3 +55,7 @@ api_console:
   script:
     - zsh .ci/test_user_gen.zsh
     - kill $(jobs -p)
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
