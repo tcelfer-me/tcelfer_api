@@ -1,7 +1,9 @@
 # Official language image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/ruby/tags/
 default:
-  image: ruby:2.7.0-alpine3.11
+  image: ruby:2.7.1-alpine3.11
+  tags:
+    - shared-exec-docker
 
 variables:
   POSTGRES_DB:               tcelfer_dev
@@ -9,6 +11,7 @@ variables:
   POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
+  - cron
   - test
 
 # Cache gems in between builds
@@ -16,12 +19,28 @@ cache:
   paths:
     - vendor/ruby
 
+cron-outdated:
+  stage: cron
+  before_script:
+    - sh .ci/before-script.sh
+  script:
+    - bundle outdated --only-explicit --porcelain --strict
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - when: never
+
 rubocop:
   stage: test
   before_script:
     - sh .ci/before-script.sh
   script:
     - bundle exec rubocop
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
+
 
 api_console:
   services:
@@ -36,3 +55,7 @@ api_console:
   script:
     - zsh .ci/test_user_gen.zsh
     - kill $(jobs -p)
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: always
