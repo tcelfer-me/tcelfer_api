@@ -32,3 +32,10 @@ Lint/RaiseException:
 
 Lint/StructNewOverride:
   Enabled: true
+
+# Rubocop 0.82.0
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
