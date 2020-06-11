@@ -14,11 +14,6 @@ stages:
   - cron
   - test
 
-# Cache gems in between builds
-cache:
-  paths:
-    - vendor/ruby
-
 cron-outdated:
   stage: cron
   before_script:
