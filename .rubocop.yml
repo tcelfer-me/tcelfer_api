@@ -53,3 +53,7 @@ Style/RedundantRegexpCharacterClass:
   Enabled: true
 Style/RedundantRegexpEscape:
   Enabled: true
+
+# Rubocop 0.86.0 :|
+Style/RedundantFetchBlock:
+  Enabled: true
