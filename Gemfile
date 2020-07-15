@@ -18,5 +18,5 @@ gem 'sinatra-contrib',  '~> 2.0'
 group :development do
   gem 'pry',         '~> 0.13'
   gem 'rake',        '~> 13.0'
-  gem 'rubocop',     '~> 0.86'
+  gem 'rubocop',     '~> 0.88'
 end
