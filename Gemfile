@@ -12,8 +12,8 @@ gem 'rack-contrib',     '~> 2.2'
 gem 'rack-cors',        '~> 1.1'
 gem 'rspec',            '~> 3.9'
 gem 'sequel',           '~> 5.35'
-gem 'sinatra',          '~> 2.0'
-gem 'sinatra-contrib',  '~> 2.0'
+gem 'sinatra',          '~> 2.1'
+gem 'sinatra-contrib',  '~> 2.1'
 
 group :development do
   gem 'pry',         '~> 0.13'
