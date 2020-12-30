@@ -53,7 +53,7 @@ module TcelferApi
     # @param [String] str
     # @return [Boolean]
     def uuid?(str)
-      str.size == 36 && str.match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/)
+      !!(str && str.size == 36 && str.match(/\A\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/))
     end
 
     # Returns the credentials array from the `HTTP['AUTHORIZATION']` header
@@ -74,7 +74,10 @@ module TcelferApi
     # @return [Boolean]
     def valid_auth_token?
       tok_id, tok_sec = http_authorization_to_creds
-      halt 400, { err: 'token id is not a valid uuid' }.to_json unless uuid?(tok_id)
+      unless uuid?(tok_id)
+        @errors = { err: 'token id is not a valid uuid' }
+        return false
+      end
 
       fetched_token = AuthToken.first(id: tok_id)
       return false unless fetched_token

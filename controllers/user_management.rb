@@ -38,11 +38,19 @@ module TcelferApi
       end
     end
 
+    get '/login', provides: :json, authentication: :user_pass do
+      AuthToken.new_tokens(
+        @auth_user.id,
+        @payload.fetch(:comment, nil),
+        @get_refresh
+      ).to_json
+    end
+
     post '/auth', provides: :json, authentication: :user_pass do
       AuthToken.new_tokens(
         @auth_user.id,
         @payload.fetch(:comment, nil),
-        @payload.fetch(:refresh, false)
+        @get_refresh
       ).to_json
     end
 
