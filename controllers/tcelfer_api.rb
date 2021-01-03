@@ -16,7 +16,7 @@ module TcelferApi
 
     set :token_auth do |_|
       condition do
-        unless valid_auth_token?
+        unless valid_auth_token?(*http_authorization_to_creds)
           halt 401, { 'WWW-Authenticate' => %(Basic realm="TcelferApi token_auth") }, @errors.to_json
         end
       end

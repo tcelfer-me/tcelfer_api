@@ -8,6 +8,7 @@ module TcelferApi
   def self.config
     @config ||= Utils._default_config
   end
+
   # Utilities for TcelferApi and the config.ru file
   class Utils
     class Error < StandardError; end
