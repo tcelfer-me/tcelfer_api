@@ -3,7 +3,7 @@
 default:
   image: ruby:2.7.1-alpine3.11
   tags:
-    - shared-exec-docker
+    - agarg-public-projects
 
 variables:
   POSTGRES_DB:               tcelfer_dev
