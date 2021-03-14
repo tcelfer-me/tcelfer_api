@@ -15,7 +15,7 @@ module TcelferApi
 
     # These keys are what are returned to the user
     EXPORT_KEYS = %i[id username email created_on].freeze
-    PASSWD_LENGTH_RANGE = (12..55).freeze
+    PASSWD_LENGTH_RANGE = (12..55)
 
     # @param [String] clear_text
     def password=(clear_text)
