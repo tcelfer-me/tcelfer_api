@@ -5,19 +5,46 @@ default:
   tags:
     - agarg-public-projects
 
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+
 variables:
   POSTGRES_DB:               tcelfer_dev
   POSTGRES_USER:             tcelfer_dev
   POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
+  - cache_up
   - cron
   - test
 
+cache: &global_cache
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/ruby
+
+cache_warm_up:
+  stage: cache_up
+  cache:
+    <<: *global_cache
+    policy: pull-push
+  before_script:
+    - apk add --update build-base postgresql-dev
+    - bundle config set path vendor
+  script:
+    - bundle install -j $(nproc)
+
 cron-outdated:
   stage: cron
+  cache:
+    <<: *global_cache
+    policy: pull
   before_script:
-    - sh .ci/before-script.sh
+    - bundle config set path vendor
   script:
     - bundle outdated --only-explicit --porcelain --strict
   rules:
@@ -27,8 +54,11 @@ cron-outdated:
 
 rubocop:
   stage: test
+  cache:
+    <<: *global_cache
+    policy: pull
   before_script:
-    - sh .ci/before-script.sh
+    - bundle config set path vendor
   script:
     - bundle exec rubocop
   rules:
@@ -41,9 +71,14 @@ api_console:
   services:
     - postgres:13.1-alpine
   stage: test
+  cache:
+    <<: *global_cache
+    policy: pull
   before_script:
     # This is all very messy for now. Sorry
-    - sh .ci/before-script.sh
+    - bundle config set path vendor
+    - apk add --update httpie zsh less build-base postgresql-dev postgresql-client
+    - cp config/tc_api.sample-dev.yml config/tc_api.dev.yml
     - sh .ci/init-tcelfer-db.sh
     - bundle exec puma&
     - sleep 10
