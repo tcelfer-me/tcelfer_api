@@ -10,6 +10,9 @@ unless ssl_key.empty? && ssl_cert.empty?
     key:        ssl_key,
     cert:       ssl_cert,
     no_tlsv1:   true,
+    # This is defined by puma so I cannot change it.
+    # rubocop:disable Naming/VariableNumber
     no_tlsv1_1: true
+    # rubocop:enable Naming/VariableNumber
   )
 end
