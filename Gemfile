@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 
 gem 'bcrypt',           '~> 3.1'
 gem 'pg',               '~> 1.2'
-gem 'puma',             '~> 5.1'
+gem 'puma',             '~> 5.3'
 gem 'rack',             '~> 2.2'
 gem 'rack-contrib',     '~> 2.2'
 gem 'rack-cors',        '~> 1.1'
