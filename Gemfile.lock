@@ -56,7 +56,7 @@ GEM
       parser (>= 2.7.1.5)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
-    sequel (5.42.0)
+    sequel (5.45.0)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -85,7 +85,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.9)
   rubocop (~> 1.7)
-  sequel (~> 5.37)
+  sequel (~> 5.45)
   sinatra (~> 2.1)
   sinatra-contrib (~> 2.1)
 
