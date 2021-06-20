@@ -46,7 +46,7 @@ cron-outdated:
   before_script:
     - bundle config set path vendor
   script:
-    - bundle outdated --only-explicit --porcelain --strict || :
+    - 'bundle outdated --only-explicit --porcelain --strict || :'
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always
