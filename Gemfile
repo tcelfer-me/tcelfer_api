@@ -11,7 +11,7 @@ gem 'rack',             '~> 2.2'
 gem 'rack-contrib',     '~> 2.2'
 gem 'rack-cors',        '~> 1.1'
 gem 'rspec',            '~> 3.9'
-gem 'sequel',           '~> 5.45'
+gem 'sequel',           '~> 5.46'
 gem 'sinatra',          '~> 2.1'
 gem 'sinatra-contrib',  '~> 2.1'
 
