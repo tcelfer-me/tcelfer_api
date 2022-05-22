@@ -1,6 +1,6 @@
 # Official language image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/ruby/tags/
-image: ruby:3.0.1-alpine3.12
+image: ruby:3.0.4-alpine3.15
 default:
   tags:
     - agarg-public-projects
@@ -69,7 +69,7 @@ rubocop:
 
 api_console:
   services:
-    - postgres:13.1-alpine
+    - postgres:13.7-alpine
   stage: test
   cache:
     <<: *global_cache
