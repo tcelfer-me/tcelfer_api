@@ -8,6 +8,7 @@ emails=( user1@example.com user2@example.com user3@example.com )
 for email in $emails; do
   for user in $usernames; do
     ${=httpie} POST http://localhost:9292/api/v1/user/new username="$user" email="$email" password='hunter2hunter2'
+    echo ''
   done
 done
 
@@ -16,6 +17,7 @@ echo 'They should both work, and not return 409'
 usernames=( no_email_1 no_email_2 )
 for user in $usernames; do
   ${=httpie} POST http://localhost:9292/api/v1/user/new username="$user" password='hunter2hunter2'
+  echo ''
 done
 
 echo 'pp TcelferApi::User.map { {user: _1.username, email: _1.email} };' | bundle exec bin/console
