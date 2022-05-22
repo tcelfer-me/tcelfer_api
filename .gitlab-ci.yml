@@ -69,7 +69,7 @@ rubocop:
 
 api_console:
   services:
-    - postgres:13.7-alpine
+    - postgres:14.3-alpine
   stage: test
   cache:
     <<: *global_cache
